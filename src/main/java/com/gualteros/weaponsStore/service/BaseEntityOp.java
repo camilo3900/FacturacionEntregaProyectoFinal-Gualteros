@@ -2,6 +2,7 @@ package com.gualteros.weaponsStore.service;
 
 import java.util.List;
 
+
 public interface BaseEntityOp <T,K>{
     void insertAll(List<T> entityList);
     void insertObject(T entity);
