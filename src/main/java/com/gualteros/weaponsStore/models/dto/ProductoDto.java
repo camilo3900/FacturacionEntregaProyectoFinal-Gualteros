@@ -1,6 +1,6 @@
 package com.gualteros.weaponsStore.models.dto;
 
-import com.gualteros.weaponsStore.models.Categoria;
+import com.gualteros.weaponsStore.models.extra.Categoria;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

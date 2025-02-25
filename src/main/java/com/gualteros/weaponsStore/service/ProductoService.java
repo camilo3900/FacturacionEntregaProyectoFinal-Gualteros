@@ -5,8 +5,6 @@ import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.gualteros.weaponsStore.models.Comprador;
 import com.gualteros.weaponsStore.models.Producto;
 import com.gualteros.weaponsStore.models.dto.ProductoDto;
 import com.gualteros.weaponsStore.repository.ProductoRepository;
