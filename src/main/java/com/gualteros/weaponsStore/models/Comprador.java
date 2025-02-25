@@ -1,15 +1,20 @@
 package com.gualteros.weaponsStore.models;
 
+import java.util.List;
+
 import com.gualteros.weaponsStore.models.dto.CompradorDto;
+import com.gualteros.weaponsStore.models.extra.Datos;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -37,6 +42,8 @@ public class Comprador  {
     @Embedded
     @Column(name = "datos")
     private Datos datos;
+    @OneToMany(mappedBy = "clienteId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    List<Factura> facturas;
 
 
     public CompradorDto toCompradorDto(){

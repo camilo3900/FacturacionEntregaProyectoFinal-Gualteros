@@ -54,14 +54,10 @@ public class CompradorService implements BaseEntityOp<Comprador, CompradorDto> {
     // OBTIENE UN COMPRADOR POR ID
     @Override
     public CompradorDto getObjectById(Long id) {
-
-        return compradorRepository.findById(id).map(it -> it.toCompradorDto()).orElseThrow(NoSuchElementException::new);
-
-        /*
-         * return
-         * compradorRepository.findById(id).map(it->it.toCompradorDto()).orElseThrow(
-         * NoSuchElementException::new);
+        /* aplicamos un map para cambiar cada objeto Comprador a su
+         * contraparte DTO
          */
+        return compradorRepository.findById(id).map(it -> it.toCompradorDto()).orElseThrow(NoSuchElementException::new);
     }
 
     // ELIMINA TODOS LOS COMPRADORES DE LA DB
