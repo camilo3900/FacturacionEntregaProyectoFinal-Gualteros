@@ -2,15 +2,12 @@ package com.gualteros.weaponsStore.models;
 
 import com.gualteros.weaponsStore.models.dto.CompradorDto;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -38,7 +35,7 @@ public class Comprador  {
     @Column(name = "datos")
     private Datos datos;
 
-
+    //type conversion
     public CompradorDto toCompradorDto(){
         return new CompradorDto(this.nombre, this.apellido);
     }
