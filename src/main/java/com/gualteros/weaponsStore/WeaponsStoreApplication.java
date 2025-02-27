@@ -1,10 +1,15 @@
 package com.gualteros.weaponsStore;
 
+<<<<<<< HEAD
 import java.util.List;
+=======
+
+>>>>>>> config-productos
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+<<<<<<< HEAD
 
 import com.gualteros.weaponsStore.models.Comprador;
 import com.gualteros.weaponsStore.models.Producto;
@@ -15,15 +20,21 @@ import com.gualteros.weaponsStore.service.CompradorService;
 import com.gualteros.weaponsStore.service.ProductoService;
 
 import io.micrometer.common.lang.Nullable;
+=======
+>>>>>>> config-productos
 import lombok.AllArgsConstructor;
 
 @SpringBootApplication
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class WeaponsStoreApplication implements CommandLineRunner {
+<<<<<<< HEAD
 	@Nullable
 	private CompradorService compradorService = null;
 	@Nullable
 	private ProductoService productoService = null;
+=======
+
+>>>>>>> config-productos
 
 	public static void main(String[] args) {
 		SpringApplication.run(WeaponsStoreApplication.class, args);
@@ -31,6 +42,7 @@ public class WeaponsStoreApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+<<<<<<< HEAD
 		/* insertarTodosCompradores(compradorService); */
 		
 	}
@@ -94,6 +106,10 @@ public class WeaponsStoreApplication implements CommandLineRunner {
 
         // INSERTAMOS LOS COMPRADORES EN LA BASE DE DATOS
 		service.insertAll(List.of(c1, c2, c3, c4, c5, c6, c7, c8));
+=======
+		
+		
+>>>>>>> config-productos
 	}
 
 }

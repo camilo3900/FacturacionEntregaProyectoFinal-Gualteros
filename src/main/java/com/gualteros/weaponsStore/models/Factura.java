@@ -2,9 +2,6 @@ package com.gualteros.weaponsStore.models;
 
 import java.util.List;
 import java.util.UUID;
-
-import com.gualteros.weaponsStore.models.dto.FacturaDto;
-
 import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -39,17 +36,13 @@ public class Factura {
     private Comprador clienteId;
     @ManyToMany(fetch = FetchType.EAGER)
     @Nullable
-    @JoinTable(name="factura_producto", joinColumns=  @JoinColumn(name = "factura_id" ), inverseJoinColumns = @JoinColumn(name = "producto_id"))
+    @JoinTable(name="factura_producto", joinColumns=  @JoinColumn(name = "factura_id" )
+    , inverseJoinColumns = @JoinColumn(name = "producto_id"))
     private List<Producto> productos;
 
 
-    public FacturaDto toFacturaDto() {
-        return FacturaDto.builder()
-        .numFacturaDto(this.numeroFactura.toString())
-        .totalPagarDto(this.totalPagar)
-        .compradorDto(this.clienteId.toCompradorDto())
-        .build();
-    }
+	public Factura() {
+	}
 
 
 }
