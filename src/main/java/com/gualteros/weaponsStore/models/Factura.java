@@ -1,7 +1,11 @@
 package com.gualteros.weaponsStore.models;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,23 +26,16 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class Factura {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id_factura")
-    private Long id;
-    @Column(name="numero_factura")
-    private UUID numeroFactura; 
-    @Column(name="total_pagar")
-    private Double totalPagar;
-    @ManyToOne(optional = false)
-    @JoinColumn(name="cliente_id")
-    private Comprador clienteId;
-    @ManyToMany(fetch = FetchType.EAGER)
-    @Nullable
-    @JoinTable(name="factura_producto", joinColumns=  @JoinColumn(name = "factura_id" )
-    , inverseJoinColumns = @JoinColumn(name = "producto_id"))
-    private List<Producto> productos;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @JsonFormat(shape = JsonFormat.Shape.STRING) 
+    @Column(name = "codigo_venta")
+    UUID codigo;
+    @Column(name="fecha_emision")
+    private LocalDate fechaEmision;
+    @Column(name="pagar")
+    Double totalPagar;
+  
 
 
 	public Factura() {
