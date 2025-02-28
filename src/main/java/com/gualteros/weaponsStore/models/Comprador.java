@@ -43,8 +43,8 @@ public class Comprador  {
     @Embedded
     @Column(name = "datos")
     private Datos datos;
-    @OneToMany(mappedBy = "clienteId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    List<Factura> facturas;
+//    @OneToMany(mappedBy = "clienteId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    List<Factura> facturas;
 
     //type conversion
     public CompradorDto toCompradorDto(){
