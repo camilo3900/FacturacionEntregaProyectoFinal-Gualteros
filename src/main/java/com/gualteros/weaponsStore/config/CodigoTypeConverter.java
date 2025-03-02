@@ -1,10 +1,9 @@
 package com.gualteros.weaponsStore.config;
 
-import java.time.LocalDate;
+
 import java.util.UUID;
-
 import jakarta.persistence.AttributeConverter;
-
+//converter para codigo de facturas
 public class CodigoTypeConverter implements AttributeConverter<UUID, String> {
 
 	@Override

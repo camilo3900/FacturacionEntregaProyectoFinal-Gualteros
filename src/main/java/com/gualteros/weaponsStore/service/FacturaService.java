@@ -8,43 +8,40 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.gualteros.weaponsStore.models.Factura;
-import com.gualteros.weaponsStore.models.ItemFactura;
-import com.gualteros.weaponsStore.models.Producto;
+import com.gualteros.weaponsStore.models.*;
 import com.gualteros.weaponsStore.models.dto.FacturaDto;
-import com.gualteros.weaponsStore.repository.FacturaRepository;
-import com.gualteros.weaponsStore.repository.ProductoRepository;
+import com.gualteros.weaponsStore.repository.*;
 
 import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-public class FacturaService implements BaseEntityOp<Factura, FacturaDto>  {
+public class FacturaService   {
 	
 	private FacturaRepository facturaRepository;
 	private ProductoRepository productoRepository;
-	
-	@Override
+	private ClienteRepository clienteRep;
+
 	public void insertAll(List<Factura> facturaList) {
-		facturaRepository.saveAll(facturaList);
 		facturaList.forEach(it->insert(it));
-		
-		
 	}
 
-	@Override
 	public FacturaDto insert(Factura factura) {
+		Cliente cliente = clienteRep.findById(factura.getCliente().getId())
+		        .orElseThrow(() -> 
+		        new RuntimeException(String.format("Cliente %s no encontrado!"
+		        		, factura.getCliente().getId())));
 		List<ItemFactura> items = new ArrayList<>();
 		factura.getItems().stream().forEach(it->{
 			if (it.getProducto() == null || it.getProducto().getId() == null) {
 				throw new NoSuchElementException("El producto en el detalle de la "
-						+ "factura debe tener un ID válido");
-				
+						+ "factura debe tener un ID válido");	
 			}
 			Producto nuevoProducto = productoRepository.findById(it.getProducto().getId())
 					.orElseThrow(()-> new NoSuchElementException());
 			if (nuevoProducto.getStock() < it.getCantidad()) {
-				throw new RuntimeException("No hay suficiente stock de " + nuevoProducto.getNombre());
+				throw new RuntimeException("No hay suficiente stock de " 
+			+ nuevoProducto.getNombre());
 			}
 			ItemFactura nuevoItem = ItemFactura.builder()
 					.cantidad(it.getCantidad())
@@ -55,32 +52,29 @@ public class FacturaService implements BaseEntityOp<Factura, FacturaDto>  {
 			productoRepository.save(nuevoProducto);
 		});	
 		Factura nuevaFactura = Factura.builder()
+				
 				.fechaEmision(factura.getFechaEmision())
 				.totalPagar(0.0)
+				.cliente(cliente)
 				.items(items)
 				.build();
-		
+				
 		items.forEach(it->it.setFactura(nuevaFactura));
 		nuevaFactura.calcularPago();
-	
-	
 			
 		return facturaRepository.save(nuevaFactura).toFacturaDto();
 	}
 	
-//	public Factura crearFactura(Factura factura) {
-//	}
 
-	@Override
 	public List<FacturaDto> getAll() {
 		return facturaRepository.findAll()
 				.stream().map(Factura::toFacturaDto)
 				.toList();
 	}
 
-	@Override
-	public FacturaDto getById(Long id) {
-		return facturaRepository.findById(id).stream().map(it->it.toFacturaDto())
+	public FacturaDto getByCode(String codigo) {
+		return facturaRepository.findById(UUID.fromString(codigo))
+				.stream().map(it->it.toFacturaDto())
 				.findFirst()
 				.orElseThrow();
 	}
@@ -91,28 +85,24 @@ public class FacturaService implements BaseEntityOp<Factura, FacturaDto>  {
 			return facturaRepository.findByNumFactura(uuid)
 					.toFacturaDto();
 		} catch (Exception e) {
-			throw new NoSuchElementException("No se encontró la factura con el código " + codigo);
+			throw new NoSuchElementException("No se encontró "
+					+ "la factura con el código " + codigo);
 		}   
 	}
-	@Override
-	public FacturaDto update(FacturaDto facturaDto, Long id) {
-		// TODO Auto-generated method stub
-		return null;
+	// TODO falta actualizar factura
+
+
+	public void deleteFactura(String codigo) {
+		facturaRepository.deleteById(UUID.fromString(codigo));
 	}
 
-	@Override
-	public List<FacturaDto> getByName(String name) {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public List<FacturaDto> ordenarPorFecha() {
+		return facturaRepository.orderByDate()
+				.stream().map((it)->it.toFacturaDto())
+				.toList();
 	}
 
-	@Override
-	public void delete(Long id) {
-		facturaRepository.deleteById(id);
-		
-	}
-
-	@Override
 	public void deleteAll() {
 		facturaRepository.deleteAll();
 		

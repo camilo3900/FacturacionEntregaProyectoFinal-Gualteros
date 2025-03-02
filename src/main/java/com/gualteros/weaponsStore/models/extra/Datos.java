@@ -2,15 +2,10 @@ package com.gualteros.weaponsStore.models.extra;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-@Embeddable
+@Embeddable //aplica para atributos tipo clase
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class Datos {
 

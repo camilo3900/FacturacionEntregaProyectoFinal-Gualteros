@@ -13,7 +13,9 @@ import lombok.*;
 @Builder
 @AllArgsConstructor@NoArgsConstructor
 public class Producto {
-
+	/*Relacion:
+	 * 1-producto-categoria: ManyToMany
+	 * 2-producto-itemFactura: OneToMany*/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_producto")
@@ -25,7 +27,8 @@ public class Producto {
     @Column(name = "stock")
     private Integer stock;
     @Nullable
-    @OneToMany(mappedBy="producto", cascade= CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy="producto", cascade= CascadeType.ALL
+    , fetch = FetchType.EAGER)
     private List<ItemFactura> itemFactura;
     @ManyToMany
     @JoinTable(name = "producto_categoria"
@@ -33,7 +36,7 @@ public class Producto {
     , inverseJoinColumns = @JoinColumn(name = "categoria_id"))
     private List<Categoria> categorias;
     
-    
+    //metodo para restar el stock por cada venta
     public void vender(Integer cantidad){
         if(stock >= cantidad){
             this.stock -= cantidad;

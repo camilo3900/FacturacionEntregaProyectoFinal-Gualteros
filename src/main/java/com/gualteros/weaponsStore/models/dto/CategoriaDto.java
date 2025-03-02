@@ -14,9 +14,12 @@ public class CategoriaDto {
 	private String nombreDto;
 	private String descDto;
 	
-
+	//type conversion
 	public Categoria toCategoria() {
-		return Categoria.builder().nombre(this.nombreDto).build();
+		return Categoria.builder()
+				.nombre(this.nombreDto)
+				.desc(descDto)
+				.build();
 	}
 
 }

@@ -1,17 +1,19 @@
 package com.gualteros.weaponsStore.models.dto;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
+@AllArgsConstructor@NoArgsConstructor
 @Builder
 public class ItemFacturaDto {
-	String idDto;
+	
 	Integer cantidadDto;
 	Double valorTotalDto;
+	String productoDto;
 
-	public ItemFacturaDto() {
-	}
+
 }

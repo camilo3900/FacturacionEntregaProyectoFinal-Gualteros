@@ -22,6 +22,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor@NoArgsConstructor
 public class Categoria {
+	/*Relacion:
+	 * 1-categoria-producto: ManyToMany*/
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -35,6 +37,7 @@ public class Categoria {
 	public CategoriaDto toCategoriaDto() {
 		return CategoriaDto.builder()
 				.nombreDto(this.nombre)
-				.descDto(this.desc).build();
+				.descDto(desc)
+				.build();
 	}
 }

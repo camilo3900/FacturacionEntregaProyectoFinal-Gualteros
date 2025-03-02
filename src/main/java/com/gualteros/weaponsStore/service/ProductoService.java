@@ -17,7 +17,7 @@ public class ProductoService implements BaseEntityOp<Producto, ProductoDto> {
 
 	private ProductoRepository productoRepository;
 	private CategoriaRepository categoriaRepository;
-
+	//inyeccion de dependencias
 	public ProductoService(@Autowired ProductoRepository productoRepository
 			,@Autowired CategoriaRepository categoriaRepository) {
 		this.productoRepository = productoRepository;
@@ -26,12 +26,36 @@ public class ProductoService implements BaseEntityOp<Producto, ProductoDto> {
 
 	@Override
 	public void insertAll(List<Producto> productoList) {
+		
+		List<Producto> newProductList = new ArrayList<>();
+		productoList.forEach(it->{
+			if(validateProducto(it)!=null) {
+				newProductList.add(it);
+			}
+		});
 		productoRepository.saveAll(productoList);
-
+	}
+	public Producto validateProducto(Producto prod) {
+		Producto productoEncontrado = productoRepository
+				.findAll().stream()
+				.filter(it -> it.getNombre().contains(prod.getNombre()))
+				.findFirst().orElse(null);
+				if(productoEncontrado!=null) {
+					throw new RuntimeException("PRODUCTOS REPETIDOS!");
+				}
+				return prod;
 	}
 
 	@Override
 	public ProductoDto insert(Producto producto) {
+		//validation category exist
+		Producto productoEncontrado = productoRepository.findAll().stream()
+				.filter(it -> it.getNombre().contains(producto.getNombre()))
+				.findFirst().orElse(null);	
+		if (productoEncontrado != null) {
+			
+			throw new RuntimeException("PRODUCTO YA EXISTE!");
+		}
 		return productoRepository.save(producto).toProductoDto();
 	}
 
@@ -51,6 +75,7 @@ public class ProductoService implements BaseEntityOp<Producto, ProductoDto> {
 
 	@Override
 	public ProductoDto update(ProductoDto productoDto, Long id) {
+		//validacion existencia en la DB
 		Producto productoEncontrado = productoRepository.findById(id)
 				.orElseThrow(NoSuchElementException::new);
 		List<Categoria> categorias = new ArrayList<>();
@@ -62,6 +87,7 @@ public class ProductoService implements BaseEntityOp<Producto, ProductoDto> {
 				categorias.add(idCat);
 			}
 		}
+		//ACTUALIZAMOS CAMPOS
 		productoEncontrado.setNombre(productoDto.getNombreDto());
 		productoEncontrado.setPrecio(productoDto.getPrecioDto());
 		productoEncontrado.setStock(productoDto.getStockDto());

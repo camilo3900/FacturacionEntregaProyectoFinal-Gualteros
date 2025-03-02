@@ -13,12 +13,14 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @Builder
 @Table(name = "items_factura")
-@AllArgsConstructor
+@AllArgsConstructor@NoArgsConstructor
+/*Clase intermedia que relaciona  productos y facturas*/
 public class ItemFactura {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,16 +37,16 @@ public class ItemFactura {
 	@JoinColumn(name="producto_id")
 	    private Producto producto;
 	
-	public ItemFactura() {
-	}
-	
-	
+
+	//calcula cantidad a comprar
 	public Float calcularTotalItem() {
 		return producto.getPrecio().floatValue() * cantidad;
 	}
-	
+	// type conversion
 	public ItemFacturaDto toItemFacturaDto() {
-		return ItemFacturaDto.builder().idDto(this.id.toString()).cantidadDto(this.cantidad)
-				.valorTotalDto(this.valorTotal.doubleValue()).build();
+		return ItemFacturaDto.builder().cantidadDto(this.cantidad)
+				.valorTotalDto(this.valorTotal.doubleValue())
+				.productoDto(this.producto.getNombre())
+				.build();
 	}
 }

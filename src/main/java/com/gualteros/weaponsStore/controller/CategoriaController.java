@@ -5,15 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.gualteros.weaponsStore.models.Categoria;
 import com.gualteros.weaponsStore.models.dto.CategoriaDto;
 import com.gualteros.weaponsStore.service.CategoriaService;
@@ -23,7 +15,7 @@ import com.gualteros.weaponsStore.service.CategoriaService;
 public class CategoriaController {
 
 	private CategoriaService categoriaService;
-	
+	//inyeccion de dependencias
 	public CategoriaController(@Autowired CategoriaService categoriaService) {
 		this.categoriaService = categoriaService;
 	}
@@ -34,14 +26,28 @@ public class CategoriaController {
 	}
 	//Agregar una categoria nueva
 	@PostMapping("/")
-	public ResponseEntity<CategoriaDto> agregarCategoria(@RequestBody Categoria categoria){
-		return new ResponseEntity<>(categoriaService.insert(categoria), HttpStatus.OK);
+	public ResponseEntity<?> agregarCategoria(@RequestBody Categoria categoria){
+		try {
+			return new ResponseEntity<>(categoriaService.insert(categoria)
+					, HttpStatus.OK);
+		} catch (Exception e) {
+			return ResponseEntity
+					.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body(e.getMessage());
+		}
+
 	}
 	//Agregar varias categorias
 	@PostMapping("/all")
 	public ResponseEntity<String> agregarCategorias(@RequestBody List<Categoria> categorias) {
-		categoriaService.insertAll(categorias);
-		return new ResponseEntity<>("Categorias agregadas", HttpStatus.OK);
+		
+		try {
+			categoriaService.insertAll(categorias);
+			return new ResponseEntity<>("Categorias agregadas", HttpStatus.OK);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+		}
+
 	}
 	//Obtener una categoria por id
 	@GetMapping("/{idCategoria}")
