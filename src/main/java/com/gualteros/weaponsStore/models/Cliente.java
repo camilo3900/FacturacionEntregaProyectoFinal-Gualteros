@@ -39,10 +39,20 @@ public class Cliente extends Persona {
 			, fetch = FetchType.EAGER)
 	private List<Factura> facturas;
 
+
+	public void actualizarCliente(ClienteDto clienteNuevo){
+		this.setNombre(clienteNuevo.getNombreDto());
+		this.setApellido(clienteNuevo.getApellidoDto());
+		this.setDni(clienteNuevo.getDniDto());
+		this.setEdad(clienteNuevo.getEdadDto());
+	}
+
 	//TYPE CONVERSION
 	public ClienteDto toClienteDto() {
 		return ClienteDto.builder().nombreDto(this.getNombre())
 				.apellidoDto(this.getApellido())
+				.edadDto(this.getEdad())
+				.dniDto(this.getDni())
 				.dfacturaDto(facturas.stream()
 						.map((it) -> it.toFacturaDto())
 						.toList())

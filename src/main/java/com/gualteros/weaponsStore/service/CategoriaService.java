@@ -1,13 +1,13 @@
 package com.gualteros.weaponsStore.service;
 
-import java.util.ArrayList;
+
 import java.util.List;
-import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.gualteros.weaponsStore.models.Categoria;
 import com.gualteros.weaponsStore.models.dto.CategoriaDto;
 import com.gualteros.weaponsStore.repository.CategoriaRepository;
+
 
 @Service
 public class CategoriaService implements BaseEntityOp<Categoria, CategoriaDto> {
@@ -16,14 +16,15 @@ public class CategoriaService implements BaseEntityOp<Categoria, CategoriaDto> {
 
 	@Override
 	public void insertAll(List<Categoria> categoriaList) {
-		//category insert all
-		List<Categoria> catList = new ArrayList<>();
-		categoriaList.forEach(it->{
-			if(validateCategory(it)!=null) {
-				catList.add(it);
-			}
-		});
-		categoriaRepository.saveAll(catList);
+		
+		for(Categoria c : categoriaList){
+            categoriaRepository.findAll().forEach(it->{
+                if(it.getNombre().contains(c.getNombre())){
+                    throw new RuntimeException("Categorias Repetidas!");
+                }
+            });    
+        }
+        categoriaRepository.saveAll(categoriaList);
 
 	}
 	
@@ -44,10 +45,9 @@ public class CategoriaService implements BaseEntityOp<Categoria, CategoriaDto> {
 			Categoria categoriaEncontrada = categoriaRepository.findAll().stream()
 					.filter(it -> it.getNombre().contains(categoria.getNombre()))
 					.findFirst().orElse(null);	
-			if (categoriaEncontrada != null) {
-				
-				throw new RuntimeException("CATEGORIA YA EXISTE!");
-			}
+					if(categoriaEncontrada != null){
+						throw new RuntimeException("Categoria ya existe!");
+					}
 			return categoriaRepository.save(categoria).toCategoriaDto();
 	
 	}
@@ -59,23 +59,29 @@ public class CategoriaService implements BaseEntityOp<Categoria, CategoriaDto> {
 				.toList();
 	}
 
+	public List<CategoriaDto> getAllOrder(){
+		return categoriaRepository.getAllCategoriasOrder()
+		.stream().map(it->it.toCategoriaDto())
+		.toList();
+	}
+
 	@Override
 	public CategoriaDto getById(Long idCategoria) {
 		return categoriaRepository.findById(idCategoria)
 				.map(it -> it.toCategoriaDto())
-				.orElseThrow(NoSuchElementException::new);
+				.orElseThrow(()-> new RuntimeException("Categoria no encontrada"));
 	}
 
 	@Override
-	public CategoriaDto update(CategoriaDto categoriaDto, Long id) {
+	public CategoriaDto update(CategoriaDto categoria, Long id) {
 		//se valida la existencia de la categoria
 		Categoria c = categoriaRepository.findById(id)
-				.orElseThrow(NoSuchElementException::new);
-		if (categoriaDto.getNombreDto() != null) {
-			c.setNombre(categoriaDto.getNombreDto());
+				.orElseThrow(()-> new RuntimeException("Categoria no encontrada"));
+		if (categoria.getNombreDto() != null) {
+			c.setNombre(categoria.getNombreDto());
 		}//si no es nulo, se agrega
-		if (categoriaDto.getDescDto() != null) {
-			c.setDesc(categoriaDto.getDescDto());
+		if (categoria.getDescDto() != null) {
+			c.setDesc(categoria.getDescDto());
 		}
 		return categoriaRepository.save(c).toCategoriaDto();
 	}
@@ -90,6 +96,9 @@ public class CategoriaService implements BaseEntityOp<Categoria, CategoriaDto> {
 
 	@Override
 	public void delete(Long id) {
+		Categoria categoriaEncontrada = categoriaRepository.findById(id)
+		.orElseThrow(()-> new RuntimeException("Categoria no encontrada!"));
+		categoriaEncontrada.eliminarProductos();
 		categoriaRepository.deleteById(id);
 	}
 	

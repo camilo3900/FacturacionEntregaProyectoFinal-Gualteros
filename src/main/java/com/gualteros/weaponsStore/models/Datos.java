@@ -12,9 +12,9 @@ import lombok.NoArgsConstructor;
 public class Datos {
 
     @Column(name = "direccion")
-    String direccion;
+    private String direccion;
     @Column(name = "ciudad")
-    String cuidad;
+    private String cuidad;
     @Column(name = "telefono")
-    String telefono;
+    private String telefono;
 }

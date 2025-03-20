@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpServerErrorException.InternalServerError;
-
 import com.gualteros.weaponsStore.models.Producto;
 import com.gualteros.weaponsStore.models.dto.ProductoDto;
+import com.gualteros.weaponsStore.models.extra.ProductoCategoria;
 import com.gualteros.weaponsStore.service.ProductoService;
+import com.gualteros.weaponsStore.utils.BaseApiResponse;
 
 @RestController
 @RequestMapping("/productos")
@@ -27,9 +27,14 @@ public class ProductoController {
 		return new ResponseEntity<>
 		(productoService.getAll(), HttpStatus.OK);
 	}
+	@GetMapping("/sorted")
+	public ResponseEntity<List<ProductoDto>> getAllSorted(){
+		return new ResponseEntity<>(productoService.getAllOrder(), HttpStatus.OK);
+	}
 	//Agregar un producto
 	@PostMapping("/")
-	public ResponseEntity<?> agregarProducto(@RequestBody Producto producto) {try {
+	public ResponseEntity<?> agregarProducto(@RequestBody Producto producto) {
+		try {
 		return new ResponseEntity<>
 		(productoService.insert(producto), HttpStatus.OK);
 	} catch (Exception e) {
@@ -49,6 +54,14 @@ public class ProductoController {
 		}
 		
 	}
+	@PostMapping("/agregar/agregar-categoria")
+    public ResponseEntity<?> agregarCategoria(@RequestBody ProductoCategoria productoCat){
+       try{
+            return new ResponseEntity<>(productoService.agregarProductoEnCategoria(productoCat.getIdProducto(), productoCat.getIdCategoria()), HttpStatus.OK);
+       }catch(Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+       }
+    }
 	@GetMapping("/{id}")
 	public ResponseEntity<ProductoDto> getProductoById(@PathVariable("id") Long idProducto) {
 		return new ResponseEntity<>
@@ -60,8 +73,12 @@ public class ProductoController {
 		return new ResponseEntity<>
 		(productoService.getByName(name), HttpStatus.OK);
 	}
+	@GetMapping("/por-categoria/{id}")
+	public ResponseEntity<List<ProductoDto>> listarPorCategoria(@PathVariable("id") Long catId){
+		return new ResponseEntity<>(productoService.getAllByCategory(catId), HttpStatus.OK);
+	}
 	// actualizar producto
-	@PutMapping("/{id}")
+	@PutMapping("/actualizar/{id}")
 	public ResponseEntity<ProductoDto> actualizarProducto(@RequestBody ProductoDto producto,
 			@PathVariable("id") Long idProd) {
 		return new ResponseEntity<>

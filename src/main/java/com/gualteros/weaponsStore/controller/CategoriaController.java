@@ -20,7 +20,7 @@ public class CategoriaController {
 		this.categoriaService = categoriaService;
 	}
 	//obtener todas las categorias
-	@GetMapping
+	@GetMapping("/todos")
 	public List<CategoriaDto> getAll() {
 		return categoriaService.getAll();
 	}
@@ -38,7 +38,7 @@ public class CategoriaController {
 
 	}
 	//Agregar varias categorias
-	@PostMapping("/all")
+	@PostMapping("/agregar-todos")
 	public ResponseEntity<String> agregarCategorias(@RequestBody List<Categoria> categorias) {
 		
 		try {
@@ -50,17 +50,22 @@ public class CategoriaController {
 
 	}
 	//Obtener una categoria por id
-	@GetMapping("/{idCategoria}")
+	@GetMapping("/encontrar/{idCategoria}")
 	public ResponseEntity<CategoriaDto> getCategoriaById(@PathVariable("idCategoria")Long id) {
 		return new ResponseEntity<>(categoriaService.getById(id), HttpStatus.OK);
 	}
+	//Obtener alfabeticamente
+	@GetMapping("/todos/sorted")
+	public ResponseEntity<List<CategoriaDto>> getAllSorted() {
+        return new ResponseEntity<>(categoriaService.getAllOrder(), HttpStatus.OK);
+    }
 	//Obtener una categoria por nombre
-	@GetMapping("/filtrar-nombre")
+	@GetMapping("/encontrar/por-nombre")
 	public ResponseEntity<List<CategoriaDto>> obtenerPorNombre(@RequestParam String name) {
 		return new ResponseEntity<>(categoriaService.getByName(name), HttpStatus.OK);
 	}
 	//Actualizar una categoria
-	@PutMapping("/{id}")
+	@PutMapping("/actualizar/{id}")
 	public ResponseEntity<CategoriaDto> actualizarCategoria(@RequestBody CategoriaDto categoria,
 			@PathVariable("id") Long idCat) {
 		return new ResponseEntity<>(categoriaService.update(categoria, idCat), HttpStatus.OK);
@@ -73,7 +78,7 @@ public class CategoriaController {
 		return new ResponseEntity<>("Categoria eliminada!", HttpStatus.OK);
 	}
 	//Eliminar todas las categorias
-	@DeleteMapping("/eliminar/all")
+	@DeleteMapping("/eliminar-todo")
 	public ResponseEntity<String> deleteAll() {
 		categoriaService.deleteAll();
 		return new ResponseEntity<>("Categorias eliminadas!", HttpStatus.OK);

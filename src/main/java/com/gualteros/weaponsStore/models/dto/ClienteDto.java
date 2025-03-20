@@ -12,6 +12,8 @@ public class ClienteDto {
 	
     String nombreDto;
     String apellidoDto;
+    Integer edadDto;
+    String dniDto;
     List<FacturaDto> dfacturaDto;
 
 	
@@ -20,6 +22,7 @@ public class ClienteDto {
         return Cliente.builder()
         .nombre(this.nombreDto)
         .apellido(this.apellidoDto)
+        .edad(this.edadDto)
         .facturas(new ArrayList<>()).build();
     }
 

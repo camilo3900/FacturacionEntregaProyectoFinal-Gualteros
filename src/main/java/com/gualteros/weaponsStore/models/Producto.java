@@ -3,7 +3,6 @@ package com.gualteros.weaponsStore.models;
 import java.util.List;
 
 import com.gualteros.weaponsStore.models.dto.ProductoDto;
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,10 +25,6 @@ public class Producto {
     private Double precio;
     @Column(name = "stock")
     private Integer stock;
-    @Nullable
-    @OneToMany(mappedBy="producto", cascade= CascadeType.ALL
-    , fetch = FetchType.EAGER)
-    private List<ItemFactura> itemFactura;
     @ManyToMany
     @JoinTable(name = "producto_categoria"
     , joinColumns = @JoinColumn(name = "producto_id")
@@ -43,6 +38,32 @@ public class Producto {
         }else{
             throw new RuntimeException("No hay stock suficiente");
         }
+    }
+    public void agregarProductos(Integer canidad){
+        this.stock += canidad;
+    }
+/*     public void actualizarProducto(Producto productoNuevo, List<Categoria> categoriasNuevas){
+        this.setNombre(productoNuevo.getNombre());
+        this.setPrecio(productoNuevo.getPrecio());
+        this.setStock(productoNuevo.getStock());
+        this.setCategorias(categoriasNuevas);
+    } */
+    public void actualizarProducto(ProductoDto productoNuevo){
+        this.setNombre(productoNuevo.getNombreDto());
+        this.setPrecio(productoNuevo.getPrecioDto());
+        this.setStock(productoNuevo.getStockDto());
+
+    }
+    public void agregarCategoria(Categoria categoria){
+        this.getCategorias().forEach(it->{
+            if(it.equals(categoria)){
+                throw new RuntimeException("El producto ya pertenece a esta Categoria");
+            }
+        });
+    }
+
+    public void eliminarCategoria(Categoria categoria){
+        this.categorias.remove(categoria);
     }
     //type conversion
     public ProductoDto toProductoDto() {

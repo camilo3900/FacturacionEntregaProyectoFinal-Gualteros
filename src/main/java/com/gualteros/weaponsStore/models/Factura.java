@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 import com.gualteros.weaponsStore.config.CodigoTypeConverter;
-import com.gualteros.weaponsStore.config.DateTypeConverter;
 import com.gualteros.weaponsStore.models.dto.FacturaDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -25,12 +24,11 @@ public class Factura {
 //    @JsonFormat(shape = JsonFormat.Shape.STRING) 
     @Convert(converter = CodigoTypeConverter.class)
     @Column(name = "codigo_venta")
-    UUID codigo;
+    private UUID codigo;
     @Column(name="fecha_emision")
-    @Convert(converter = DateTypeConverter.class)
     private LocalDate fechaEmision;
     @Column(name="pagar")
-    Double totalPagar;
+    private Double totalPagar;
     @OneToMany(mappedBy = "factura"
     		, cascade = CascadeType.ALL
     		, fetch = FetchType.EAGER)
@@ -47,10 +45,18 @@ public class Factura {
 	//calcula el pago total
 	public void calcularPago(){
          this.items.forEach(it-> {
-            this.totalPagar+= it.getValorTotal();
+            this.totalPagar+= it.getTotalItem();
         });
        
     }
+
+	public void agregarItem(ItemFactura item){
+		this.setFechaEmision(LocalDate.now());
+		this.items.add(item);
+	}
+	public void eliminarItem(ItemFactura item){
+		this.items.remove(item);
+	}
 	//type converter
 	public FacturaDto toFacturaDto() {
 		return FacturaDto.builder()

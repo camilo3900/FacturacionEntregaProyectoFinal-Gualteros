@@ -9,11 +9,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor@NoArgsConstructor
 @Builder
-public class ItemFacturaDto {
-	
-	Integer cantidadDto;
-	Double valorTotalDto;
-	String productoDto;
 
+public class ItemFacturaDto {
+
+    Integer cantidadDto;
+    Double totalItemDto;
+    String juegoDto;
 
 }

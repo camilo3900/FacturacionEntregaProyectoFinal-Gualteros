@@ -32,7 +32,19 @@ public class Categoria {
 	@Column(name = "descripcion")
 	private String desc;
 	@ManyToMany(mappedBy = "categorias")
-	List<Producto> productos;
+	private List<Producto> productos;
+
+	public void eliminarProductos() {
+		List<Producto> productList = this.productos;
+		productList.forEach(it->{	
+			it.getCategorias().remove(this);
+		});
+		this.productos.clear();
+	}
+	public void agregarProducto(Producto producto){
+		this.productos.add(producto);
+		producto.getCategorias().add(this);
+	}
 	//type conversion to categoriaDto
 	public CategoriaDto toCategoriaDto() {
 		return CategoriaDto.builder()
