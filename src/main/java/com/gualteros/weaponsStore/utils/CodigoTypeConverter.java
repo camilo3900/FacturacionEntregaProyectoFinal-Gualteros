@@ -1,4 +1,4 @@
-package com.gualteros.weaponsStore.config;
+package com.gualteros.weaponsStore.utils;
 
 
 import java.util.UUID;

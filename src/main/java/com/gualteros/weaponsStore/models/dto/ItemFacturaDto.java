@@ -14,6 +14,6 @@ public class ItemFacturaDto {
 
     Integer cantidadDto;
     Double totalItemDto;
-    String juegoDto;
+    String productoDto;
 
 }

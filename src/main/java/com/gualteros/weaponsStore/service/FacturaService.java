@@ -26,8 +26,8 @@ public class FacturaService   {
 	private ItemFacturaRepository itemFacturaRepository;
 	private ClienteRepository clienteRep;
 
-	public void insertAll(List<Factura> facturaList) {
-		facturaList.forEach(it->facturaRepository.save(it));
+	public void insertAll(List<FacturaRequest> facturaList) {
+		facturaList.forEach(it->insert(it));
 	}
 
 	public FacturaDto insert(FacturaRequest facturaNueva) {
@@ -35,9 +35,9 @@ public class FacturaService   {
         Cliente cliente = clienteRep.findById(facturaNueva.getIdCliente())
        .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
        facturaNueva.getItemsRequest().stream().forEach(it->{
-            Producto producto = productoRepository.findById(it.getJuegoId()).orElseThrow(() -> new RuntimeException("Juego no encontrado."));
+            Producto producto = productoRepository.findById(it.getProductoId()).orElseThrow(() -> new RuntimeException("Producto no encontrado."));
             if(producto.getStock() < it.getCantidad()){
-                throw new RuntimeException("No hay stock suficiente para la cantidad solicitada.");
+                throw new RuntimeException(String.format("No hay stock suficiente para la cantidad solicitada de %s.", producto.getNombre()));
             }
             ItemFactura nuevoItem = ItemFactura.builder().cantidad(it.getCantidad())
             .factura(new Factura()).itemDetail(ItemDetail.builder().productoId(producto.getId()).nombreProducto(producto.getNombre()).precioUnitario(producto.getPrecio()).build()).build();
@@ -123,6 +123,8 @@ public class FacturaService   {
 	}
 
 	public void deleteAll() {
+		List<Cliente> clients = facturaRepository.findAll().stream().map(it->it.getCliente()).toList();
+		clients.forEach(it->it.setFacturas(List.of()));
 		facturaRepository.deleteAll();
 		
 	}

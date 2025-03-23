@@ -52,7 +52,7 @@ public class ItemFactura {
 
 
     public ItemFacturaDto toItemFacturaDto(){
-        return ItemFacturaDto.builder().cantidadDto(this.cantidad).juegoDto(itemDetail.getNombreProducto())
+        return ItemFacturaDto.builder().cantidadDto(this.cantidad).productoDto(itemDetail.getNombreProducto())
         .totalItemDto(this.totalItem).build();
     }
 

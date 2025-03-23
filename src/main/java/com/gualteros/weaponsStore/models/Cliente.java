@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.gualteros.weaponsStore.models.dto.ClienteDto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
@@ -31,12 +32,14 @@ public class Cliente extends Persona {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
+	@Schema(description = "Identificador unico", example = "1", accessMode = Schema.AccessMode.READ_ONLY)
 	private Long id;
 	@Embedded
 	private Datos datos;//clase embebida dentro de cliente
 	@OneToMany(mappedBy = "cliente"
 			, cascade = CascadeType.ALL
 			, fetch = FetchType.EAGER)
+	@Schema(description = "Lista facturas", example = "[]")
 	private List<Factura> facturas;
 
 

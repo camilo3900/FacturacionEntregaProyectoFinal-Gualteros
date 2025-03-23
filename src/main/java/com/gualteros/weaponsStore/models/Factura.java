@@ -3,8 +3,10 @@ package com.gualteros.weaponsStore.models;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
-import com.gualteros.weaponsStore.config.CodigoTypeConverter;
+
 import com.gualteros.weaponsStore.models.dto.FacturaDto;
+import com.gualteros.weaponsStore.utils.CodigoTypeConverter;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

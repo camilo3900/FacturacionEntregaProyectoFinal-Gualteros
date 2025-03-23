@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.gualteros.weaponsStore.models.dto.CategoriaDto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,12 +27,16 @@ public class Categoria {
 	 * 1-categoria-producto: ManyToMany*/
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Schema(description = "Identificador unico", example = "1", accessMode = Schema.AccessMode.READ_ONLY)
 	private Long id;
 	@Column(name = "nombre_categoria")
+	@Schema(description = "nombre de categoria", example = "Supervivencia")
 	private String nombre;
 	@Column(name = "descripcion")
+	@Schema(description = "descripcion de categoria", example = "Herramientas y equipos esenciales para sobrevivir en entornos extremos y situaciones de emergencia.")
 	private String desc;
 	@ManyToMany(mappedBy = "categorias")
+	@Schema(description = "Productos relacionados con la categoria", example = "[]")
 	private List<Producto> productos;
 
 	public void eliminarProductos() {

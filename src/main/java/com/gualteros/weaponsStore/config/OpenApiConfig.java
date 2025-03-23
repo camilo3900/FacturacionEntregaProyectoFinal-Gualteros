@@ -20,7 +20,7 @@ public class OpenApiConfig {
                         .license(new License().name("Apache 2.0").url("http://springdoc.org")))
                 .externalDocs(new ExternalDocumentation()
                         .description("Documentación de la API de la tienda WeaponsStore.")
-                        .url("https://springshop.wiki.github.org/docs"));
+                        .url("https://github.com/camilo3900/FacturacionEntregaProyectoFinal-Gualteros.git"));
     }
 
 }

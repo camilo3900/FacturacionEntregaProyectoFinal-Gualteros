@@ -11,6 +11,10 @@ import com.gualteros.weaponsStore.models.Cliente;
 
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
+
+
+	@Query("SELECT c FROM Cliente c ORDER BY c.nombre ASC")
+	List<Cliente> getAllClientesSorted();
 	@Query("SELECT c FROM Cliente c WHERE c.nombre LIKE :name")	
 	List<Cliente> findByName(@Param("name") String nombreCliente);
 	@Query(value = "SELECT * FROM clientes C WHERE C.dni = :dni LIMIT 1", nativeQuery = true)			

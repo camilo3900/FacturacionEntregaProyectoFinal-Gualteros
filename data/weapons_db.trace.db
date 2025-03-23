@@ -4334,3 +4334,97 @@ SELECT * FROM cliente WHERE dni = ? LIMIT 1 [42102-232]
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "CLIENTE" no encontrada
 Table "CLIENTE" not found; SQL statement:
 SELECT * FROM Cliente WHERE dni = ? LIMIT 1 [42102-232]
+2025-03-21 07:26:35.972145-05:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "UPDATE PRODUCTOS SET [*]30 WHERE ID_PRODUCTO = 8"; se esperaba "identifier"
+Syntax error in SQL statement "UPDATE PRODUCTOS SET [*]30 WHERE ID_PRODUCTO = 8"; expected "identifier"; SQL statement:
+UPDATE PRODUCTOS SET 30 WHERE ID_PRODUCTO = 8 [42001-232]
+2025-03-21 07:27:45.118776-05:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "UPDATE PRODUCTOS SET [*]30 WHERE ID_PRODUCTO = 8"; se esperaba "identifier"
+Syntax error in SQL statement "UPDATE PRODUCTOS SET [*]30 WHERE ID_PRODUCTO = 8"; expected "identifier"; SQL statement:
+UPDATE PRODUCTOS SET 30 WHERE ID_PRODUCTO = 8 [42001-232]
+2025-03-21 07:28:08.282788-05:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "UPDATE PRODUCTOS SET [*]30 WHERE ID_PRODUCTO = 8"; se esperaba "identifier"
+Syntax error in SQL statement "UPDATE PRODUCTOS SET [*]30 WHERE ID_PRODUCTO = 8"; expected "identifier"; SQL statement:
+UPDATE PRODUCTOS SET 30 WHERE ID_PRODUCTO = 8 [42001-232]
+2025-03-21 07:28:48.071896-05:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "UPDATE PRODUCTOS SET [*]30 WHERE PRECIO_PRODUCTO = 8"; se esperaba "identifier"
+Syntax error in SQL statement "UPDATE PRODUCTOS SET [*]30 WHERE PRECIO_PRODUCTO = 8"; expected "identifier"; SQL statement:
+UPDATE PRODUCTOS SET 30 WHERE PRECIO_PRODUCTO = 8 [42001-232]
+2025-03-21 07:30:53.015626-05:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "UPDATE PRODUCTOS SET [*]30 WHERE ID_PRODUCTO = 9"; se esperaba "identifier"
+Syntax error in SQL statement "UPDATE PRODUCTOS SET [*]30 WHERE ID_PRODUCTO = 9"; expected "identifier"; SQL statement:
+UPDATE PRODUCTOS SET 30 WHERE ID_PRODUCTO = 9 [42001-232]
+2025-03-22 10:50:56.259381-05:00 database: close
+org.h2.message.DbException: IO Exception: "Closing"
+IO Exception: "Closing" [90028-232]
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.mvstore.db.Store.close(Store.java:374)
+	at org.h2.engine.Database.closeOpenFilesAndUnlock(Database.java:1292)
+	at org.h2.engine.Database.closeImpl(Database.java:1254)
+	at org.h2.engine.Database.close(Database.java:1173)
+	at org.h2.engine.Database.close(Database.java:1150)
+	at org.h2.engine.Database.removeSession(Database.java:1077)
+	at org.h2.engine.SessionLocal.close(SessionLocal.java:916)
+	at org.h2.jdbc.JdbcConnection.close(JdbcConnection.java:390)
+	at org.h2.server.web.WebSession.close(WebSession.java:267)
+	at org.h2.server.web.WebServer.stop(WebServer.java:472)
+	at org.h2.server.web.JakartaWebServlet.destroy(JakartaWebServlet.java:57)
+	at org.apache.catalina.core.StandardWrapper.unload(StandardWrapper.java:960)
+	at org.apache.catalina.core.StandardWrapper.stopInternal(StandardWrapper.java:1214)
+	at org.apache.catalina.util.LifecycleBase.stop(LifecycleBase.java:235)
+	at org.apache.catalina.core.StandardContext.stopInternal(StandardContext.java:4650)
+	at org.apache.catalina.util.LifecycleBase.stop(LifecycleBase.java:235)
+	at org.apache.catalina.core.ContainerBase$StopChild.call(ContainerBase.java:1219)
+	at org.apache.catalina.core.ContainerBase$StopChild.call(ContainerBase.java:1208)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75)
+	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145)
+	at org.apache.catalina.core.ContainerBase.stopInternal(ContainerBase.java:814)
+	at org.apache.catalina.util.LifecycleBase.stop(LifecycleBase.java:235)
+	at org.apache.catalina.core.ContainerBase$StopChild.call(ContainerBase.java:1219)
+	at org.apache.catalina.core.ContainerBase$StopChild.call(ContainerBase.java:1208)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75)
+	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145)
+	at org.apache.catalina.core.ContainerBase.stopInternal(ContainerBase.java:814)
+	at org.apache.catalina.util.LifecycleBase.stop(LifecycleBase.java:235)
+	at org.apache.catalina.core.StandardService.stopInternal(StandardService.java:471)
+	at org.apache.catalina.util.LifecycleBase.stop(LifecycleBase.java:235)
+	at org.apache.catalina.core.StandardServer.stopInternal(StandardServer.java:915)
+	at org.apache.catalina.util.LifecycleBase.stop(LifecycleBase.java:235)
+	at org.apache.catalina.startup.Tomcat.stop(Tomcat.java:447)
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.stopTomcat(TomcatWebServer.java:301)
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.destroy(TomcatWebServer.java:374)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.doClose(ServletWebServerApplicationContext.java:177)
+	at org.springframework.context.support.AbstractApplicationContext.close(AbstractApplicationContext.java:1126)
+	at org.springframework.boot.devtools.restart.Restarter.stop(Restarter.java:308)
+	at org.springframework.boot.devtools.restart.Restarter.lambda$restart$1(Restarter.java:250)
+	at org.springframework.boot.devtools.restart.Restarter$LeakSafeThread.run(Restarter.java:612)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientException: IO Exception: "Closing"
+IO Exception: "Closing" [90028-232]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:566)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	... 43 more
+Caused by: org.h2.mvstore.MVStoreException: Writing to sun.nio.ch.FileChannelImpl@d7fcf5e failed; length 8192 at 0 [2.3.232/2]
+	at org.h2.mvstore.DataUtils.newMVStoreException(DataUtils.java:996)
+	at org.h2.mvstore.DataUtils.writeFully(DataUtils.java:478)
+	at org.h2.mvstore.SingleFileStore.writeFully(SingleFileStore.java:67)
+	at org.h2.mvstore.SingleFileStore.writeFully(SingleFileStore.java:28)
+	at org.h2.mvstore.RandomAccessStore.writeStoreHeader(RandomAccessStore.java:610)
+	at org.h2.mvstore.RandomAccessStore.writeCleanShutdownMark(RandomAccessStore.java:417)
+	at org.h2.mvstore.FileStore.writeCleanShutdown(FileStore.java:810)
+	at org.h2.mvstore.FileStore.stop(FileStore.java:277)
+	at org.h2.mvstore.MVStore.closeStore(MVStore.java:693)
+	at org.h2.mvstore.MVStore.close(MVStore.java:643)
+	at org.h2.mvstore.db.Store.close(Store.java:364)
+	... 41 more
+Caused by: java.io.IOException: El volumen para un archivo ha sido alterado externamente, por lo que el archivo abierto ya no es válido
+	at java.base/sun.nio.ch.FileDispatcherImpl.pwrite0(Native Method)
+	at java.base/sun.nio.ch.FileDispatcherImpl.pwrite(FileDispatcherImpl.java:74)
+	at java.base/sun.nio.ch.IOUtil.writeFromNativeBuffer(IOUtil.java:130)
+	at java.base/sun.nio.ch.IOUtil.write(IOUtil.java:97)
+	at java.base/sun.nio.ch.IOUtil.write(IOUtil.java:67)
+	at java.base/sun.nio.ch.FileChannelImpl.writeInternal(FileChannelImpl.java:878)
+	at java.base/sun.nio.ch.FileChannelImpl.write(FileChannelImpl.java:861)
+	at org.h2.mvstore.DataUtils.writeFully(DataUtils.java:474)
+	... 50 more

@@ -90,4 +90,10 @@ public class ClienteService implements BaseEntityOp<Cliente, ClienteDto> {
 		
 	}
 
+	public List<ClienteDto> obtenerClientesOrdenados(){
+		return clienteRepository.getAllClientesSorted()
+                .stream().map((it)->it.toClienteDto())
+                .collect(Collectors.toList());
+	}
+
 }

@@ -18,15 +18,16 @@ public class BaseApiResponse {
         return BaseApiResponse.builder()
                 .message(message)
                 .data(data)
+                .error("n/a")
                 .statusCode(HttpStatus.OK.value())
                 .build();
     }
 
-    public static BaseApiResponse error(HttpStatus status, String message, String error) {
+    public static BaseApiResponse error(HttpStatus status, String errorMessage) {
         return BaseApiResponse.builder()
                 .statusCode(status.value())
-                .message(message)
-                .error(error)
+                .error(status.getReasonPhrase())
+                .message(errorMessage)
                 .build();
     }
 

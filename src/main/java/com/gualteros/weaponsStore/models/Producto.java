@@ -3,6 +3,8 @@ package com.gualteros.weaponsStore.models;
 import java.util.List;
 
 import com.gualteros.weaponsStore.models.dto.ProductoDto;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,20 +20,26 @@ public class Producto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_producto")
+    @Schema(description = "Identificador unico", example = "1", accessMode = Schema.AccessMode.READ_ONLY)
     private Long id;
     @Column(name = "nombre_producto")
+    @Schema(description = "Nombre del producto", example = "Kit de Supervivencia Militar")
     private String nombre;
     @Column(name = "precio_producto")
+    @Schema(description = "Precio del producto", example = "378.0")
     private Double precio;
     @Column(name = "stock")
+    @Schema(description = "Stock disponible", example = "50")
     private Integer stock;
     @ManyToMany
     @JoinTable(name = "producto_categoria"
     , joinColumns = @JoinColumn(name = "producto_id")
     , inverseJoinColumns = @JoinColumn(name = "categoria_id"))
+    @Schema(description = "Categorias producto", example = "[]")
     private List<Categoria> categorias;
     
     //metodo para restar el stock por cada venta
+    @Schema(description = "Categorias del producto", example = "{\"id\":9}")
     public void vender(Integer cantidad){
         if(stock >= cantidad){
             this.stock -= cantidad;
